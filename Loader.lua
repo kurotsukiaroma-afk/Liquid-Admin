@@ -192,6 +192,157 @@ local Vars = {
     }
 }
 
+-- Default Whitelist
+local DefaultWhitelist = {
+    10719732556, 2642670557, 5297715820, 10119108267, 7413869642, 4164624223,
+    1997049403, 2009177657, 1149607059, 10998294614, 10430242075, 10596380372,
+    10958092629, 10141823783, 7991154883, 10756382639, 10736135850, 10706927326,
+    3369250742, 10464866926, 2459206540, 2064042814, 1376848579, 10476707687,
+    7438787421, 140553005, 2343596162, 11006722186, 11003792087, 10998905047,
+    891874909, 181455091, 1414592, 12999835, 7621479012, 1037937262, 713432661,
+    10526443777, 10361487051, 10612881122, 10545181298, 10556814332, 10329177327,
+    10201160699, 10224942226, 9220910053, 10246827443, 10252053786, 8337030230,
+    8554930452, 9684414562, 9335745860, 60648517, 22934631, 5356741156,
+    2562436456, 1292690423, 78712507, 9751187113, 1535017573, 2002602203,
+    2210241703, 6952267, 3368635797, 1842403067, 10089322527, 3859780380,
+    566677614, 51855172170, 19534395, 2235803197, 3911595841, 1068853421,
+    26102693, 39518718, 1291941725, 395533556, 905957670, 31062118, 29370983
+}
+
+for _, Id in ipairs(DefaultWhitelist) do
+    table.insert(Vars.Whitelist, Id)
+end
+
+-- Stats UI (Session Info Style)
+local StatsGui = Instance.new("ScreenGui")
+StatsGui.Name = "LiquidStats"
+StatsGui.Parent = CoreGui
+StatsGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 190, 0, 130)
+MainFrame.Position = UDim2.new(0, 10, 0, 10)
+MainFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 18)
+MainFrame.BackgroundTransparency = 0.1
+MainFrame.BorderSizePixel = 0
+MainFrame.Parent = StatsGui
+
+local Corner = Instance.new("UICorner")
+Corner.CornerRadius = UDim.new(0, 8)
+Corner.Parent = MainFrame
+
+local Stroke = Instance.new("UIStroke")
+Stroke.Color = Color3.fromRGB(35, 35, 45)
+Stroke.Thickness = 1
+Stroke.Parent = MainFrame
+
+local TitleLabel = Instance.new("TextLabel")
+TitleLabel.Size = UDim2.new(1, 0, 0, 25)
+TitleLabel.Position = UDim2.new(0, 10, 0, 5)
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.Text = "Session Info"
+TitleLabel.TextColor3 = Color3.fromRGB(65, 180, 245)
+TitleLabel.TextSize = 12
+TitleLabel.Font = Enum.Font.GothamBold
+TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+TitleLabel.Parent = MainFrame
+
+local TimePlayedLabel = Instance.new("TextLabel")
+TimePlayedLabel.Size = UDim2.new(1, -10, 0, 18)
+TimePlayedLabel.Position = UDim2.new(0, 10, 0, 32)
+TimePlayedLabel.BackgroundTransparency = 1
+TimePlayedLabel.Text = "Time Played: 00:00:00"
+TimePlayedLabel.TextColor3 = Color3.fromRGB(200, 200, 220)
+TimePlayedLabel.TextSize = 11
+TimePlayedLabel.Font = Enum.Font.Gotham
+TimePlayedLabel.TextXAlignment = Enum.TextXAlignment.Left
+TimePlayedLabel.Parent = MainFrame
+
+local KillsLabel = Instance.new("TextLabel")
+KillsLabel.Size = UDim2.new(0, 80, 0, 18)
+KillsLabel.Position = UDim2.new(0, 10, 0, 52)
+KillsLabel.BackgroundTransparency = 1
+KillsLabel.Text = "Kills: 0"
+KillsLabel.TextColor3 = Color3.fromRGB(200, 200, 220)
+KillsLabel.TextSize = 11
+KillsLabel.Font = Enum.Font.Gotham
+KillsLabel.TextXAlignment = Enum.TextXAlignment.Left
+KillsLabel.Parent = MainFrame
+
+local AttacksLabel = Instance.new("TextLabel")
+AttacksLabel.Size = UDim2.new(0, 80, 0, 18)
+AttacksLabel.Position = UDim2.new(0, 95, 0, 52)
+AttacksLabel.BackgroundTransparency = 1
+AttacksLabel.Text = "Attacks: 0"
+AttacksLabel.TextColor3 = Color3.fromRGB(200, 200, 220)
+AttacksLabel.TextSize = 11
+AttacksLabel.Font = Enum.Font.Gotham
+AttacksLabel.TextXAlignment = Enum.TextXAlignment.Left
+AttacksLabel.Parent = MainFrame
+
+local WhitelistLabel = Instance.new("TextLabel")
+WhitelistLabel.Size = UDim2.new(0, 80, 0, 18)
+WhitelistLabel.Position = UDim2.new(0, 10, 0, 72)
+WhitelistLabel.BackgroundTransparency = 1
+WhitelistLabel.Text = "WL: 0"
+WhitelistLabel.TextColor3 = Color3.fromRGB(200, 200, 220)
+WhitelistLabel.TextSize = 11
+WhitelistLabel.Font = Enum.Font.Gotham
+WhitelistLabel.TextXAlignment = Enum.TextXAlignment.Left
+WhitelistLabel.Parent = MainFrame
+
+local BlacklistLabel = Instance.new("TextLabel")
+BlacklistLabel.Size = UDim2.new(0, 80, 0, 18)
+BlacklistLabel.Position = UDim2.new(0, 95, 0, 72)
+BlacklistLabel.BackgroundTransparency = 1
+BlacklistLabel.Text = "BL: 0"
+BlacklistLabel.TextColor3 = Color3.fromRGB(200, 200, 220)
+BlacklistLabel.TextSize = 11
+BlacklistLabel.Font = Enum.Font.Gotham
+BlacklistLabel.TextXAlignment = Enum.TextXAlignment.Left
+BlacklistLabel.Parent = MainFrame
+
+local PingLabel = Instance.new("TextLabel")
+PingLabel.Size = UDim2.new(0, 80, 0, 18)
+PingLabel.Position = UDim2.new(0, 10, 0, 92)
+PingLabel.BackgroundTransparency = 1
+PingLabel.Text = "Ping: 0ms"
+PingLabel.TextColor3 = Color3.fromRGB(200, 200, 220)
+PingLabel.TextSize = 11
+PingLabel.Font = Enum.Font.Gotham
+PingLabel.TextXAlignment = Enum.TextXAlignment.Left
+PingLabel.Parent = MainFrame
+
+local AutoLabel = Instance.new("TextLabel")
+AutoLabel.Size = UDim2.new(0, 80, 0, 18)
+AutoLabel.Position = UDim2.new(0, 95, 0, 92)
+AutoLabel.BackgroundTransparency = 1
+AutoLabel.Text = "Auto: None"
+AutoLabel.TextColor3 = Color3.fromRGB(200, 200, 220)
+AutoLabel.TextSize = 11
+AutoLabel.Font = Enum.Font.Gotham
+AutoLabel.TextXAlignment = Enum.TextXAlignment.Left
+AutoLabel.Parent = MainFrame
+
+local function UpdateUI()
+    local Elapsed = tick() - Vars.Stats.Start
+    TimePlayedLabel.Text = "Time Played: " .. string.format("%02d:%02d:%02d", math.floor(Elapsed/3600), math.floor((Elapsed%3600)/60), math.floor(Elapsed%60))
+    KillsLabel.Text = "Kills: " .. Vars.Stats.Kills
+    AttacksLabel.Text = "Attacks: " .. Vars.Stats.Attacks
+    WhitelistLabel.Text = "WL: " .. #Vars.Whitelist
+    BlacklistLabel.Text = "BL: " .. #Vars.Blacklist
+    PingLabel.Text = "Ping: " .. math.floor(player:GetNetworkPing() * 1000) .. "ms"
+    
+    local AutoStr = ""
+    if Vars.Auto.Kill then AutoStr = AutoStr .. "K " end
+    if Vars.Auto.Blind then AutoStr = AutoStr .. "B " end
+    if Vars.Auto.Inf then AutoStr = AutoStr .. "I " end
+    if Vars.Auto.Perm then AutoStr = AutoStr .. "P " end
+    if Vars.Auto.Nan then AutoStr = AutoStr .. "N " end
+    if AutoStr == "" then AutoStr = "None" end
+    AutoLabel.Text = "Auto: " .. AutoStr
+end
+
 -- Utility Functions
 local function GetPlayer(input)
     if not input then return nil end
@@ -258,12 +409,17 @@ end
 
 -- Combat Functions
 local function KillTarget(target)
+    for _, id in pairs(Vars.Whitelist) do
+        if target.UserId == id then return false end
+    end
+    
     local remote = GetDiamondRemote()
     if not remote then return false end
     local hum = target.Character and target.Character:FindFirstChildOfClass("Humanoid")
     if hum and hum.Health > 0 then
         pcall(function() remote:InvokeServer(7, hum, 9999999) end)
         Vars.Stats.Kills = Vars.Stats.Kills + 1
+        UpdateUI()
         return true
     end
     return false
@@ -292,6 +448,10 @@ local function GiveGodMode()
 end
 
 local function ApplyNanHealth(target)
+    for _, id in pairs(Vars.Whitelist) do
+        if target.UserId == id then return false end
+    end
+    
     local chartreuse = GetChartreuseRemote()
     if not chartreuse then return false end
     local lockOn = FindTool("Lock On Launcher")
@@ -307,12 +467,17 @@ local function ApplyNanHealth(target)
         local feetPos = targetHRP.Position - Vector3.new(0, 3, 0)
         pcall(function() lockOnRemote:FireServer(feetPos) end)
         Vars.Stats.Attacks = Vars.Stats.Attacks + 1
+        UpdateUI()
         return true
     end
     return false
 end
 
 local function BlindTarget(target)
+    for _, id in pairs(Vars.Whitelist) do
+        if target.UserId == id then return false end
+    end
+    
     local blindRemote = ReplicatedStorage:FindFirstChild("e7f1b238-1d59-4ae8-89f5-1f5c9c22759f")
     if not blindRemote then return false end
     local remote = GetDiamondRemote()
@@ -323,6 +488,7 @@ local function BlindTarget(target)
     if hum and hum.Health > 0 and remote then
         pcall(function() remote:InvokeServer(7, hum, 9999999) end)
         Vars.Stats.Kills = Vars.Stats.Kills + 1
+        UpdateUI()
         task.wait(0.1)
     end
     
@@ -344,6 +510,10 @@ local function BlindTarget(target)
 end
 
 local function PermaBlindTarget(target)
+    for _, id in pairs(Vars.Whitelist) do
+        if target.UserId == id then return false end
+    end
+    
     local firePart, staff = nil, nil
     local staffTool = FindTool("Hades Staff of Darkness")
     if staffTool and staffTool:FindFirstChild("Handle") then
@@ -361,6 +531,7 @@ local function PermaBlindTarget(target)
         if targetHum and targetHum.Health > 0 and remote then
             pcall(function() remote:InvokeServer(7, targetHum, 9999999) end)
             Vars.Stats.Kills = Vars.Stats.Kills + 1
+            UpdateUI()
         end
     end
     
@@ -464,6 +635,7 @@ local function GrabCommand(targetName)
     if remoteEvent then
         pcall(function() remoteEvent:FireServer("Activate", targetHead.Position) end)
         Vars.Stats.Attacks = Vars.Stats.Attacks + 1
+        UpdateUI()
     end
     
     task.wait(0.3)
@@ -503,6 +675,7 @@ local function GrabV2Command(targetName)
     if remoteEvent then
         pcall(function() remoteEvent:FireServer("Activate") end)
         Vars.Stats.Attacks = Vars.Stats.Attacks + 1
+        UpdateUI()
     end
     
     task.wait(0.5)
@@ -556,6 +729,7 @@ local function SnowballCommand(targetName)
     if dracovinRemote then
         pcall(function() dracovinRemote:FireServer(Enum.KeyCode.E) end)
         Vars.Stats.Attacks = Vars.Stats.Attacks + 1
+        UpdateUI()
     end
     
     task.wait(0.5)
@@ -577,6 +751,7 @@ local function SnowballCommand(targetName)
     while shootCount < 20 and IsPlayerFrozen(targetChar) do
         pcall(function() hyperlaserRemote:FireServer() end)
         Vars.Stats.Attacks = Vars.Stats.Attacks + 1
+        UpdateUI()
         shootCount = shootCount + 1
         task.wait(0.3)
     end
@@ -615,6 +790,7 @@ local function ESPLockOnSystem(targetName)
     if lockOnRemote then
         pcall(function() lockOnRemote:FireServer(targetHRP.Position) end)
         Vars.Stats.Attacks = Vars.Stats.Attacks + 1
+        UpdateUI()
     end
     
     task.wait(0.3)
@@ -636,6 +812,7 @@ local function ESPLockOnSystem(targetName)
             end
         end)
         Vars.Stats.Attacks = Vars.Stats.Attacks + 1
+        UpdateUI()
     end
     
     task.wait(0.3)
@@ -664,6 +841,7 @@ local function AnchorV2Command()
     
     pcall(function() swordRemote:FireServer(Enum.KeyCode.E) end)
     Vars.Stats.Attacks = Vars.Stats.Attacks + 1
+    UpdateUI()
     task.wait(0.3)
     pcall(function() hum:UnequipTools() end)
     Notify("Liquid", "Anchor V2 completed", 3)
@@ -714,12 +892,14 @@ local function EggCommand(targetName)
     if touchInterest then
         pcall(function() touchInterest:Fire() end)
         Vars.Stats.Attacks = Vars.Stats.Attacks + 1
+        UpdateUI()
     else
         local originalHandleCFrame = eggHandle.CFrame
         pcall(function() eggHandle.CFrame = targetHRP.CFrame * CFrame.new(0, 2, 0) end)
         task.wait(0.1)
         pcall(function() eggHandle.CFrame = originalHandleCFrame end)
         Vars.Stats.Attacks = Vars.Stats.Attacks + 1
+        UpdateUI()
     end
     
     task.wait(0.5)
@@ -752,7 +932,11 @@ local function startAutoKill()
         while autoRunning.Kill and isRunning do
             task.wait(0.5)
             local targets = GetTargets(autoTarget, false)
-            for _, t in ipairs(targets) do KillTarget(t) end
+            for _, t in ipairs(targets) do
+                if not IsWhitelisted(t.UserId) then
+                    KillTarget(t)
+                end
+            end
         end
     end)
 end
@@ -764,7 +948,11 @@ local function startAutoBlind()
         while autoRunning.Blind and isRunning do
             task.wait(0.5)
             local targets = GetTargets(autoTarget, false)
-            for _, t in ipairs(targets) do BlindTarget(t) end
+            for _, t in ipairs(targets) do
+                if not IsWhitelisted(t.UserId) then
+                    BlindTarget(t)
+                end
+            end
         end
     end)
 end
@@ -788,7 +976,11 @@ local function startAutoPerm()
         while autoRunning.Perm and isRunning do
             task.wait(0.5)
             local targets = GetTargets(autoTarget, false)
-            for _, t in ipairs(targets) do PermaBlindTarget(t) end
+            for _, t in ipairs(targets) do
+                if not IsWhitelisted(t.UserId) then
+                    PermaBlindTarget(t)
+                end
+            end
         end
     end)
 end
@@ -800,12 +992,17 @@ local function startAutoNan()
         while autoRunning.Nan and isRunning do
             task.wait(0.5)
             local targets = GetTargets(autoTarget, false)
-            for _, t in ipairs(targets) do ApplyNanHealth(t) end
+            for _, t in ipairs(targets) do
+                if not IsWhitelisted(t.UserId) then
+                    ApplyNanHealth(t)
+                end
+            end
         end
     end)
 end
 
--- Loop Featureslocal loopThreads = {Inf = nil, Nan = nil, God = nil}
+-- Loop Features
+local loopThreads = {Inf = nil, Nan = nil, God = nil}
 local loopRunning = {Inf = false, Nan = false, God = false}
 
 local function startLoopInf(targetParam)
@@ -831,7 +1028,11 @@ local function startLoopNan(targetParam)
     loopThreads.Nan = task.spawn(function()
         while loopRunning.Nan and isRunning do
             local targets = GetTargets(targetParam or "others", false)
-            for _, t in ipairs(targets) do ApplyNanHealth(t) end
+            for _, t in ipairs(targets) do
+                if not IsWhitelisted(t.UserId) then
+                    ApplyNanHealth(t)
+                end
+            end
             task.wait(4)
         end
     end)
@@ -867,16 +1068,13 @@ local function Reinject()
     
     isRunning = false
     
-    -- Cleanup all threads
     for k in pairs(autoRunning) do autoRunning[k] = false end
     for k in pairs(loopRunning) do loopRunning[k] = false end
     
-    -- Cleanup connections
     if AntiPauseConnection then AntiPauseConnection:Disconnect() end
     
-    -- Cleanup GUI
     for _, v in ipairs(CoreGui:GetChildren()) do
-        if v.Name == "LiquidNotif" or v.Name == "LiquidTopBar" then
+        if v.Name == "LiquidNotif" or v.Name == "LiquidStats" then
             v:Destroy()
         end
     end
@@ -884,7 +1082,6 @@ local function Reinject()
     Notify("Liquid", "Reinjecting...", 2)
     task.wait(1)
     
-    -- Reload the script
     loadstring(game:HttpGet("https://raw.githubusercontent.com/kurotsukiaroma-afk/Liquid-Admin/refs/heads/main/Loader.lua"))()
 end
 
@@ -902,17 +1099,19 @@ local function HandleCommand(msg)
     local cmd = string.lower(parts[1])
     local args = table.concat(parts, " ", 2)
 
-    -- Reinject Command
     if cmd == "reinject" or cmd == "ri" then
         Reinject()
         return
     end
 
-    -- Combat Commands
     if cmd == "kill" or cmd == "k" then
         local targets = GetTargets(args, true)
         local count = 0
-        for _, t in ipairs(targets) do if KillTarget(t) then count = count + 1 end end
+        for _, t in ipairs(targets) do
+            if not IsWhitelisted(t.UserId) then
+                if KillTarget(t) then count = count + 1 end
+            end
+        end
         Notify("Liquid", "Killed " .. count .. " player(s)", 3)
 
     elseif cmd == "inf" or cmd == "i" then
@@ -931,22 +1130,33 @@ local function HandleCommand(msg)
     elseif cmd == "nan" or cmd == "n" then
         local targets = GetTargets(args, false)
         local count = 0
-        for _, t in ipairs(targets) do if ApplyNanHealth(t) then count = count + 1 end end
+        for _, t in ipairs(targets) do
+            if not IsWhitelisted(t.UserId) then
+                if ApplyNanHealth(t) then count = count + 1 end
+            end
+        end
         Notify("Liquid", "Nan health applied to " .. count .. " player(s)", 3)
 
     elseif cmd == "blind" or cmd == "b" then
         local targets = GetTargets(args, false)
         local count = 0
-        for _, t in ipairs(targets) do if BlindTarget(t) then count = count + 1 end end
+        for _, t in ipairs(targets) do
+            if not IsWhitelisted(t.UserId) then
+                if BlindTarget(t) then count = count + 1 end
+            end
+        end
         Notify("Liquid", "Blinded " .. count .. " player(s)", 3)
 
     elseif cmd == "perm" or cmd == "p" then
         local targets = GetTargets(args, false)
         local count = 0
-        for _, t in ipairs(targets) do if PermaBlindTarget(t) then count = count + 1 end end
+        for _, t in ipairs(targets) do
+            if not IsWhitelisted(t.UserId) then
+                if PermaBlindTarget(t) then count = count + 1 end
+            end
+        end
         Notify("Liquid", "Permablinded " .. count .. " player(s)", 3)
 
-    -- Grab/Movement Commands
     elseif cmd == "grab" or cmd == "gr" then
         if args and args ~= "" then GrabCommand(args) else Notify("Liquid", "Usage: grab <name>", 3, "alert") end
 
@@ -965,7 +1175,6 @@ local function HandleCommand(msg)
     elseif cmd == "anchorv2" or cmd == "av2" then
         AnchorV2Command()
 
-    -- Auto Commands
     elseif cmd == "ak" then
         Vars.Auto.Kill = not Vars.Auto.Kill
         if Vars.Auto.Kill then startAutoKill() else autoRunning.Kill = false end
@@ -1003,12 +1212,12 @@ local function HandleCommand(msg)
     elseif cmd == "at" then
         if args and args ~= "" then
             autoTarget = args
+            Vars.Auto.Target = args
             Notify("Liquid", "Auto target set to: " .. args, 2)
         else
-            Notify("Liquid", "Current auto target: " .. autoTarget, 2)
+            Notify("Liquid", "Current auto target: " .. Vars.Auto.Target, 2)
         end
 
-    -- Loop Commands
     elseif cmd == "loopinf" then
         startLoopInf(args)
         Notify("Liquid", "Loop inf started on: " .. (args or "others"), 2)
@@ -1033,13 +1242,11 @@ local function HandleCommand(msg)
         stopLoopGod()
         Notify("Liquid", "Loop godmode stopped", 2)
 
-    -- Protection Commands
     elseif cmd == "agpp" then
         Vars.AntiPause = not Vars.AntiPause
         if Vars.AntiPause then StartAntiPause() else if AntiPauseConnection then AntiPauseConnection:Disconnect() end end
         Notify("Liquid", "Anti-Pause " .. (Vars.AntiPause and "ON" or "OFF"), 2)
 
-    -- Skin Tone Commands
     elseif cmd == "skintone" or cmd == "st" then
         local target = GetPlayer(args) or player
         local skin = GetSkinColorName(target.Character)
@@ -1068,7 +1275,6 @@ local function HandleCommand(msg)
         pcall(function() writefile(SkinToneLogFile, "") end)
         Notify("Liquid", "Cleared " .. count .. " skin tone log entries", 2)
 
-    -- Whitelist Commands
     elseif cmd == "wl" then
         local sub = parts[2]
         local name = parts[3]
@@ -1078,6 +1284,7 @@ local function HandleCommand(msg)
                 if not IsWhitelisted(target.UserId) then
                     table.insert(Vars.Whitelist, target.UserId)
                     Notify("Liquid", "Added " .. target.Name .. " to whitelist", 3)
+                    UpdateUI()
                 else
                     Notify("Liquid", target.Name .. " is already whitelisted", 3, "alert")
                 end
@@ -1091,6 +1298,7 @@ local function HandleCommand(msg)
                     if id == target.UserId then
                         table.remove(Vars.Whitelist, i)
                         Notify("Liquid", "Removed " .. target.Name .. " from whitelist", 3)
+                        UpdateUI()
                         return
                     end
                 end
@@ -1114,6 +1322,7 @@ local function HandleCommand(msg)
                 if id == target.UserId then
                     table.remove(Vars.Whitelist, i)
                     Notify("Liquid", "Removed " .. target.Name .. " from whitelist", 3)
+                    UpdateUI()
                     return
                 end
             end
@@ -1122,7 +1331,6 @@ local function HandleCommand(msg)
             Notify("Liquid", "Player not found: " .. args, 3, "alert")
         end
 
-    -- Blacklist Commands
     elseif cmd == "bl" then
         local sub = parts[2]
         local name = parts[3]
@@ -1132,6 +1340,7 @@ local function HandleCommand(msg)
                 if not IsBlacklisted(target.UserId) then
                     table.insert(Vars.Blacklist, target.UserId)
                     Notify("Liquid", "Added " .. target.Name .. " to blacklist", 3)
+                    UpdateUI()
                 else
                     Notify("Liquid", target.Name .. " is already blacklisted", 3, "alert")
                 end
@@ -1145,6 +1354,7 @@ local function HandleCommand(msg)
                     if id == target.UserId then
                         table.remove(Vars.Blacklist, i)
                         Notify("Liquid", "Removed " .. target.Name .. " from blacklist", 3)
+                        UpdateUI()
                         return
                     end
                 end
@@ -1168,6 +1378,7 @@ local function HandleCommand(msg)
                 if id == target.UserId then
                     table.remove(Vars.Blacklist, i)
                     Notify("Liquid", "Removed " .. target.Name .. " from blacklist", 3)
+                    UpdateUI()
                     return
                 end
             end
@@ -1176,7 +1387,6 @@ local function HandleCommand(msg)
             Notify("Liquid", "Player not found: " .. args, 3, "alert")
         end
 
-    -- Save Command
     elseif cmd == "save" then
         pcall(function()
             local data = {
@@ -1190,7 +1400,6 @@ local function HandleCommand(msg)
             Notify("Liquid", "Data saved", 2)
         end)
 
-    -- Utility Commands
     elseif cmd == "health" or cmd == "hp" then
         local target = GetPlayer(args) or player
         local char = target.Character
@@ -1287,7 +1496,6 @@ local function HandleCommand(msg)
         Vars.Debug = not Vars.Debug
         Notify("Liquid", "Debug mode " .. (Vars.Debug and "ON" or "OFF"), 2)
 
-    -- External Tools
     elseif cmd == "spy" then
         loadstring(game:HttpGet("https://raw.githubusercontent.com/ltseverydayyou/uuuuuuu/refs/heads/main/SimpleSpyRework.luau"))()
         Notify("Liquid", "Loading remote spy...", 2)
@@ -1304,7 +1512,6 @@ local function HandleCommand(msg)
         loadstring(game:HttpGet("https://raw.githubusercontent.com/ltseverydayyou/uuuuuuu/refs/heads/main/DexPlusBackup.luau"))()
         Notify("Liquid", "Loading dex explorer...", 2)
 
-    -- Help Commands
     elseif cmd == "help" or cmd == "cmds" then
         print("\n" .. string.rep("-", 50))
         print("Liquid Admin Commands (Prefix: " .. Vars.Prefix .. ")")
@@ -1410,14 +1617,51 @@ end
 -- Player Join Handler
 local function OnPlayerAdded(NewPlayer)
     task.wait(1)
-    if IsBlacklisted(NewPlayer.UserId) then
-        Notify("Liquid", "Blacklisted player joined: " .. NewPlayer.Name, 5, "alert")
-    end
-    if IsWhitelisted(NewPlayer.UserId) then
-        Notify("Liquid", "Whitelisted player joined: " .. NewPlayer.Name, 3)
-    end
+    
     local skin = GetSkinColorName(NewPlayer.Character)
     LogSkinTone(NewPlayer.Name, skin)
+    
+    if IsWhitelisted(NewPlayer.UserId) then
+        Notify("Liquid", "Whitelisted player joined: " .. NewPlayer.Name, 3)
+        return
+    end
+    
+    if IsBlacklisted(NewPlayer.UserId) then
+        Notify("Liquid", "Blacklisted player joined: " .. NewPlayer.Name, 5, "alert")
+        
+        task.spawn(function()
+            repeat
+                task.wait(0.5)
+                if NewPlayer.Character then
+                    local hum = NewPlayer.Character:FindFirstChildOfClass("Humanoid")
+                    if hum and hum.Health > 0 then
+                        KillTarget(NewPlayer)
+                    end
+                    BlindTarget(NewPlayer)
+                end
+            until NewPlayer.Character == nil or NewPlayer.Character.Parent == nil
+        end)
+    else
+        for _, skintype in pairs({"Porcelain/Albino", "Fair/Pale", "Light Beige", "Warm Ivory", "Golden/Tan", "Olive/Tan", "Caramel/Light Brown", "Honey Brown", "Chestnut/Brown", "Rich Brown", "Dark Brown", "Espresso", "Deep Brown", "Ebony/Very Dark", "Black/Darkest"}) do
+            if skin == skintype then
+                Notify("Liquid", "Non-whitelisted player joined: " .. NewPlayer.Name, 3, "alert")
+                
+                task.spawn(function()
+                    repeat
+                        task.wait(0.5)
+                        if NewPlayer.Character then
+                            local hum = NewPlayer.Character:FindFirstChildOfClass("Humanoid")
+                            if hum and hum.Health > 0 then
+                                KillTarget(NewPlayer)
+                            end
+                            BlindTarget(NewPlayer)
+                        end
+                    until NewPlayer.Character == nil or NewPlayer.Character.Parent == nil
+                end)
+                break
+            end
+        end
+    end
 end
 
 -- Setup Chat
@@ -1442,6 +1686,7 @@ pcall(function()
         Vars.Blacklist = data.Blacklist or {}
         Vars.Stats = data.Stats or {Start = tick(), Kills = 0, Attacks = 0}
         Vars.Prefix = data.Prefix or ","
+        UpdateUI()
     end
 end)
 
@@ -1454,6 +1699,23 @@ for _, plr in ipairs(Players:GetPlayers()) do
     task.spawn(function()
         local skin = GetSkinColorName(plr.Character)
         LogSkinTone(plr.Name, skin)
+        
+        if plr ~= player then
+            if not IsWhitelisted(plr.UserId) then
+                task.spawn(function()
+                    repeat
+                        task.wait(0.5)
+                        if plr.Character then
+                            local hum = plr.Character:FindFirstChildOfClass("Humanoid")
+                            if hum and hum.Health > 0 then
+                                KillTarget(plr)
+                            end
+                            BlindTarget(plr)
+                        end
+                    until plr.Character == nil or plr.Character.Parent == nil
+                end)
+            end
+        end
     end)
 end
 
@@ -1461,39 +1723,10 @@ Players.PlayerAdded:Connect(OnPlayerAdded)
 
 Notify("Liquid Admin", "Ready! Type " .. Vars.Prefix .. "help or " .. Vars.Prefix .. "reinject", 4)
 
--- Top Bar UI
-local topBar = Instance.new("ScreenGui")
-topBar.Name = "LiquidTopBar"
-topBar.Parent = CoreGui
-topBar.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-local barFrame = Instance.new("Frame")
-barFrame.Size = UDim2.new(1, 0, 0, 25)
-barFrame.Position = UDim2.new(0, 0, 0, 0)
-barFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 25)
-barFrame.BackgroundTransparency = 0.1
-barFrame.BorderSizePixel = 0
-barFrame.Parent = topBar
-
-local barText = Instance.new("TextLabel")
-barText.Size = UDim2.new(1, 0, 1, 0)
-barText.BackgroundTransparency = 1
-barText.Text = "Liquid Admin - Ready"
-barText.TextColor3 = Color3.fromRGB(255, 255, 255)
-barText.TextSize = 12
-barText.Font = Enum.Font.Gotham
-barText.Parent = barFrame
-
+-- Update UI every second
 task.spawn(function()
     while isRunning do
         task.wait(1)
-        local autoStr = ""
-        if Vars.Auto.Kill then autoStr = autoStr .. "K " end
-        if Vars.Auto.Blind then autoStr = autoStr .. "B " end
-        if Vars.Auto.Inf then autoStr = autoStr .. "I " end
-        if Vars.Auto.Perm then autoStr = autoStr .. "P " end
-        if Vars.Auto.Nan then autoStr = autoStr .. "N " end
-        if autoStr == "" then autoStr = "None" end
-        barText.Text = "Liquid Admin - Kills: " .. Vars.Stats.Kills .. " | Attacks: " .. Vars.Stats.Attacks .. " | WL: " .. #Vars.Whitelist .. " | BL: " .. #Vars.Blacklist .. " | Auto: " .. autoStr
+        UpdateUI()
     end
 end)
