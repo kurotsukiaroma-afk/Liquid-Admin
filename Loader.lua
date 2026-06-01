@@ -213,7 +213,7 @@ for _, Id in ipairs(DefaultWhitelist) do
     table.insert(Vars.Whitelist, Id)
 end
 
--- Stats UI (Session Info Style)
+-- Stats UI (Session Info Style) - MOVED DOWN TO POSITION 350
 local StatsGui = Instance.new("ScreenGui")
 StatsGui.Name = "LiquidStats"
 StatsGui.Parent = CoreGui
@@ -221,7 +221,7 @@ StatsGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(0, 190, 0, 130)
-MainFrame.Position = UDim2.new(0, 10, 0, 10)
+MainFrame.Position = UDim2.new(0, 10, 0, 350)
 MainFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 18)
 MainFrame.BackgroundTransparency = 0.1
 MainFrame.BorderSizePixel = 0
