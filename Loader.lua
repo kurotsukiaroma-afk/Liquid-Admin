@@ -14,6 +14,9 @@ local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
 local Prefixes = {",", ".", "$"}
 
+-- Anti-Reinject Variable
+local isRunning = true
+
 -- Simple Notification System
 local function Notify(title, message, duration, style)
     local CoreGui = game:GetService("CoreGui")
@@ -746,7 +749,7 @@ local function startAutoKill()
     if autoRunning.Kill then return end
     autoRunning.Kill = true
     autoThreads.Kill = task.spawn(function()
-        while autoRunning.Kill do
+        while autoRunning.Kill and isRunning do
             task.wait(0.5)
             local targets = GetTargets(autoTarget, false)
             for _, t in ipairs(targets) do KillTarget(t) end
@@ -758,7 +761,7 @@ local function startAutoBlind()
     if autoRunning.Blind then return end
     autoRunning.Blind = true
     autoThreads.Blind = task.spawn(function()
-        while autoRunning.Blind do
+        while autoRunning.Blind and isRunning do
             task.wait(0.5)
             local targets = GetTargets(autoTarget, false)
             for _, t in ipairs(targets) do BlindTarget(t) end
@@ -770,7 +773,7 @@ local function startAutoInf()
     if autoRunning.Inf then return end
     autoRunning.Inf = true
     autoThreads.Inf = task.spawn(function()
-        while autoRunning.Inf do
+        while autoRunning.Inf and isRunning do
             task.wait(0.5)
             local targets = GetTargets(autoTarget, false)
             for _, t in ipairs(targets) do GiveInfiniteHealth(t) end
@@ -782,7 +785,7 @@ local function startAutoPerm()
     if autoRunning.Perm then return end
     autoRunning.Perm = true
     autoThreads.Perm = task.spawn(function()
-        while autoRunning.Perm do
+        while autoRunning.Perm and isRunning do
             task.wait(0.5)
             local targets = GetTargets(autoTarget, false)
             for _, t in ipairs(targets) do PermaBlindTarget(t) end
@@ -794,7 +797,7 @@ local function startAutoNan()
     if autoRunning.Nan then return end
     autoRunning.Nan = true
     autoThreads.Nan = task.spawn(function()
-        while autoRunning.Nan do
+        while autoRunning.Nan and isRunning do
             task.wait(0.5)
             local targets = GetTargets(autoTarget, false)
             for _, t in ipairs(targets) do ApplyNanHealth(t) end
@@ -802,15 +805,14 @@ local function startAutoNan()
     end)
 end
 
--- Loop Features
-local loopThreads = {Inf = nil, Nan = nil, God = nil}
+-- Loop Featureslocal loopThreads = {Inf = nil, Nan = nil, God = nil}
 local loopRunning = {Inf = false, Nan = false, God = false}
 
 local function startLoopInf(targetParam)
     if loopRunning.Inf then return end
     loopRunning.Inf = true
     loopThreads.Inf = task.spawn(function()
-        while loopRunning.Inf do
+        while loopRunning.Inf and isRunning do
             local targets = GetTargets(targetParam or "others", false)
             for _, t in ipairs(targets) do GiveInfiniteHealth(t) end
             task.wait(3)
@@ -827,7 +829,7 @@ local function startLoopNan(targetParam)
     if loopRunning.Nan then return end
     loopRunning.Nan = true
     loopThreads.Nan = task.spawn(function()
-        while loopRunning.Nan do
+        while loopRunning.Nan and isRunning do
             local targets = GetTargets(targetParam or "others", false)
             for _, t in ipairs(targets) do ApplyNanHealth(t) end
             task.wait(4)
@@ -844,7 +846,7 @@ local function startLoopGod()
     if loopRunning.God then return end
     loopRunning.God = true
     loopThreads.God = task.spawn(function()
-        while loopRunning.God do
+        while loopRunning.God and isRunning do
             GiveGodMode()
             task.wait(5)
         end
@@ -854,6 +856,36 @@ end
 local function stopLoopGod()
     loopRunning.God = false
     loopThreads.God = nil
+end
+
+-- Reinject Function
+local function Reinject()
+    if not isRunning then
+        Notify("Liquid", "Already running!", 2, "alert")
+        return
+    end
+    
+    isRunning = false
+    
+    -- Cleanup all threads
+    for k in pairs(autoRunning) do autoRunning[k] = false end
+    for k in pairs(loopRunning) do loopRunning[k] = false end
+    
+    -- Cleanup connections
+    if AntiPauseConnection then AntiPauseConnection:Disconnect() end
+    
+    -- Cleanup GUI
+    for _, v in ipairs(CoreGui:GetChildren()) do
+        if v.Name == "LiquidNotif" or v.Name == "LiquidTopBar" then
+            v:Destroy()
+        end
+    end
+    
+    Notify("Liquid", "Reinjecting...", 2)
+    task.wait(1)
+    
+    -- Reload the script
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/kurotsukiaroma-afk/Liquid-Admin/refs/heads/main/Loader.lua"))()
 end
 
 -- Command Handler
@@ -869,6 +901,12 @@ local function HandleCommand(msg)
 
     local cmd = string.lower(parts[1])
     local args = table.concat(parts, " ", 2)
+
+    -- Reinject Command
+    if cmd == "reinject" or cmd == "ri" then
+        Reinject()
+        return
+    end
 
     -- Combat Commands
     if cmd == "kill" or cmd == "k" then
@@ -1271,6 +1309,8 @@ local function HandleCommand(msg)
         print("\n" .. string.rep("-", 50))
         print("Liquid Admin Commands (Prefix: " .. Vars.Prefix .. ")")
         print(string.rep("-", 50))
+        print("\n[Reinject]")
+        print("  reinject/ri - Reinject Liquid Admin")
         print("\n[Combat]")
         print("  kill/k <target> - Kill player(s)")
         print("  inf/i <target> - Give infinite health")
@@ -1339,6 +1379,7 @@ local function HandleCommand(msg)
         print("Target options: all, others, me, or player name")
         print("Use '" .. Vars.Prefix .. "help' to see all commands")
         print("Use '" .. Vars.Prefix .. "requirements' to see tool requirements")
+        print("Use '" .. Vars.Prefix .. "reinject' to reload Liquid Admin")
         Notify("Liquid", "Help info printed to console", 3)
 
     elseif cmd == "requirements" or cmd == "req" then
@@ -1418,7 +1459,7 @@ end
 
 Players.PlayerAdded:Connect(OnPlayerAdded)
 
-Notify("Liquid Admin", "Ready! Type " .. Vars.Prefix .. "help", 4)
+Notify("Liquid Admin", "Ready! Type " .. Vars.Prefix .. "help or " .. Vars.Prefix .. "reinject", 4)
 
 -- Top Bar UI
 local topBar = Instance.new("ScreenGui")
@@ -1444,7 +1485,7 @@ barText.Font = Enum.Font.Gotham
 barText.Parent = barFrame
 
 task.spawn(function()
-    while true do
+    while isRunning do
         task.wait(1)
         local autoStr = ""
         if Vars.Auto.Kill then autoStr = autoStr .. "K " end
